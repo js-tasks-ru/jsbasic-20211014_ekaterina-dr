@@ -10,6 +10,7 @@ export default class RibbonMenu {
     this.elem.querySelector('nav').addEventListener('click', this.categoryClick);
 
   }
+  
   render() {
     this.elem = createElement(`
       <div class="ribbon">
@@ -33,7 +34,7 @@ export default class RibbonMenu {
       let ribbonCategory = createElement(`
         <a href="#" class="ribbon__item" data-id="${category.id}">${category.name}</a>`
       );
-     
+
       ribbonInner.appendChild(ribbonCategory);
 
     });
@@ -57,32 +58,32 @@ export default class RibbonMenu {
     let ribbon = this.elem.querySelector('.ribbon__inner');
     ribbon.scrollBy(350, 0);
   }
-  
+
 
   onScrollHandlerLeft = (event) => {
     let ribbon = event.target;
 
     let scrollLeft = ribbon.scrollLeft;
     let leftButton = document.querySelector('.ribbon__arrow_left');
-    
+
     if (scrollLeft === 0) {
       leftButton.classList.remove('ribbon__arrow_visible');
     } else {
       leftButton.classList.add('ribbon__arrow_visible');
     }
   }
-  
-  
+
+
   onScrollHandlerRight = (event) => {
     let ribbon = event.target;
 
-  let scrollWidth = ribbon.scrollWidth;
-  let scrollLeft = ribbon.scrollLeft;
-  let clientWidth = ribbon.clientWidth;
-  let scrollRight = scrollWidth - scrollLeft - clientWidth;
+    let scrollWidth = ribbon.scrollWidth;
+    let scrollLeft = ribbon.scrollLeft;
+    let clientWidth = ribbon.clientWidth;
+    let scrollRight = scrollWidth - scrollLeft - clientWidth;
 
-  let rightButton = document.querySelector('.ribbon__arrow_right');
-    
+    let rightButton = document.querySelector('.ribbon__arrow_right');
+
     if (scrollRight < 1) {
       rightButton.classList.remove('ribbon__arrow_visible');
     } else {
@@ -99,27 +100,27 @@ export default class RibbonMenu {
   }
 
 
- categoryClick = (event) => {
-   event.preventDefault();
-  let category = event.target.closest('a');
-  let activeCategory = this.elem.querySelector('.ribbon__item_active');
-  if (category) {
-    category.classList.add('ribbon__item_active');
-  } else {
-    category.classList.remove('ribbon__item_active');
-  };
+  categoryClick = (event) => {
+    event.preventDefault();
+    let category = event.target.closest('a');
+    let activeCategory = this.elem.querySelector('.ribbon__item_active');
+    if (category) {
+      category.classList.add('ribbon__item_active');
+    } else {
+      category.classList.remove('ribbon__item_active');
+    };
 
-  if (activeCategory) {
-    activeCategory.classList.remove('ribbon__item_active');
-  };
+    if (activeCategory) {
+      activeCategory.classList.remove('ribbon__item_active');
+    };
 
-  let customEvent = new CustomEvent('ribbon-select', {
-    bubbles: true,
-    detail: category.dataset.id
+    let customEvent = new CustomEvent('ribbon-select', {
+      bubbles: true,
+      detail: category.dataset.id
 
-  });
- 
-  this.elem.dispatchEvent(customEvent);
+    });
+
+    this.elem.dispatchEvent(customEvent);
   };
 }
 
