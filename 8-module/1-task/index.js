@@ -38,8 +38,8 @@ export default class CartIcon {
     window.addEventListener('resize', () => this.updatePosition());
   }
 
-  updatePosition() {
-    let cart = document.querySelector('.cart-icon');
+  updatePosition = () => {
+    let cart = this.elem;
 
     if (cart && cart.offsetWidth && cart.offsetHeight && document.documentElement.clientWidth > 767) {
       let topCoords = cart.getBoundingClientRect().top;
