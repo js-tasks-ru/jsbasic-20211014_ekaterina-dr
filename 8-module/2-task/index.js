@@ -11,9 +11,9 @@ export default class ProductGrid {
       maxSpiciness: 4,
       category: '',
     };
+
     this.render();
     this.renderProducts();
-
   }
 
   render() {
@@ -28,7 +28,7 @@ export default class ProductGrid {
     let productInner = this.elem.querySelector('.products-grid__inner');
     productInner.innerHTML = '';
     this.filteredProducts.forEach((product) => {
-      productInner.innerHTML += new ProductCard(product).elem.outerHTML;
+      productInner.appendChild(new ProductCard(product).elem);
     })
   }
 

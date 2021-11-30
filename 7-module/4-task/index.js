@@ -1,13 +1,15 @@
 export default class StepSlider {
-  constructor({ steps, value = 0 }) {
+  constructor({ steps, value }) {
     this.steps = steps;
-    this.value = value;
+    this.value = value ? value - 1 : 0;
     this.render();
     this.elem.addEventListener('click', this.changeValue);
     this.elem.querySelector('.slider__thumb').addEventListener('pointerdown', this.moveThumb);
 
   }
-  render() {
+  render() {let stepWidth = 100 / (this.steps - 1);
+    let initialWidth = stepWidth * this.value;
+
     this.elem = document.createElement('div');
     this.elem.classList.add('slider');
     this.elem.innerHTML = `
@@ -15,20 +17,21 @@ export default class StepSlider {
      <span class="slider__value"></span>
    </div>
 
-   <div class="slider__progress" style="width: 0%;"></div>
+   <div class="slider__progress" style="width: ${initialWidth}%;"></div>
    <div class="slider__steps">
    </div>`
 
     let spans = '';
     for (let i = 0; i < this.steps; i++) {
-      if (i === 0) {
+      if (i === this.value) {
         spans += '<span class="slider__step-active"></span>';
       } else {
         spans += '<span></span>';
       };
     };
-    this.elem.querySelector('.slider__steps').innerHTML = spans;
 
+    this.elem.querySelector('.slider__steps').innerHTML = spans;
+    this.elem.querySelector('.slider__thumb').style.left = `${initialWidth}%`;
   }
 
   changeValue = (event) => {
@@ -61,7 +64,6 @@ export default class StepSlider {
     let progress = this.elem.querySelector('.slider__progress');
     thumb.style.position = 'absolute';
     thumb.style.zIndex = 1000;
-
 
     let move = (event) => {
       event.preventDefault();
@@ -106,7 +108,5 @@ export default class StepSlider {
     };
 
     thumb.ondragstart = () => false;
-
   };
-
 }
